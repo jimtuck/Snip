@@ -46,7 +46,8 @@ namespace Winter
 
         public override void Load()
         {
-            RunSpotifyWebHelperIfNotRunning();
+            //Another quick hack so we don't go throwing an exception when it doesn't exist. -- jtuck
+            if (IsSpotifyAvailable) RunSpotifyWebHelperIfNotRunning();
 
             //this.SpotifyAvailabilityChanged += Spotify_SpotifyAvailabilityChanged;
             //this.SpotifyPlayStateChanged += Spotify_SpotifyPlayStateChanged;
@@ -55,9 +56,9 @@ namespace Winter
 
         public override void Update()
         {
-            /*
+            
             // Spotify and the helper are not running but it's available.
-            if ((!IsSpotifyRunning || !IsSpotifyWebHelperRunning) && IsSpotifyAvailable)
+            /*if ((!IsSpotifyRunning || !IsSpotifyWebHelperRunning) && IsSpotifyAvailable)
             {
                 this.IsSpotifyAvailable = false;
 
@@ -70,7 +71,7 @@ namespace Winter
             // Spotify and the helper are running but are not available.
             if (IsSpotifyRunning && IsSpotifyWebHelperRunning && !IsSpotifyAvailable)
             {
-                this.IsSpotifyAvailable = true;
+                //this.IsSpotifyAvailable = true;
 
                 if (this.SpotifyAvailabilityChanged != null)
                 {
@@ -88,15 +89,18 @@ namespace Winter
                 return;
             }
 
+            */
+            //Uncommented so that the tooltip changes when Spotify is unavailable. -- jtuck
+
             // Spotify is not available at all.
             if (!IsSpotifyRunning && !IsSpotifyWebHelperRunning)
             {
                 TextHandler.UpdateText(Globals.ResourceManager.GetString("SpotifyIsNotRunning"));
 
                 return;
-            }*/
+            }
 
-            if (!IsSpotifyWebHelperRunning)
+            if (!IsSpotifyWebHelperRunning && IsSpotifyAvailable)
             {
                 RunSpotifyWebHelperIfNotRunning();
 
@@ -186,10 +190,14 @@ namespace Winter
         {
         }
 
-        private bool IsSpotifyAvailable
+        private static bool IsSpotifyAvailable
         {
-            get;
-            set;
+            get
+            {
+                //Quick hack to make it not crash when specifying spotify without it installed -- jtuck
+                return System.IO.File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Spotify\spotify.exe");
+            }
+           
         }
 
         private static bool IsSpotifyRunning
