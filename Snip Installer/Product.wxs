@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Snip" Language="1033" Version="1.0.0.0" Manufacturer="Jim Tuck" UpgradeCode="0aacfc6b-3ee9-4ea0-bd00-c7303bb75b75">
+  <Product Id="*" Name="Snip" Language="1033" Version="0.0.0.2" Manufacturer="Jim Tuck" UpgradeCode="0aacfc6b-3ee9-4ea0-bd00-c7303bb75b75">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <Property Id="ARPPRODUCTICON">_D8D37E17C055</Property>
     <Icon Id="_D8D37E17C055" SourceFile="..\Snip\Resources\Snip.ico" />
     <MajorUpgrade DowngradeErrorMessage="A newer version of Snip is already installed." />
-    <MediaTemplate />
+    <MediaTemplate EmbedCab="yes" />
     <Feature Id="ProductFeature" Title="Snip" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="ResourceComponents" />
